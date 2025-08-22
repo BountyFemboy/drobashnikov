@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крутой сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+                 .cta-button {
+             background: linear-gradient(45deg, #4CAF50, #45a049);
+             color: white;
+             border: none;
+             padding: 20px 40px;
+             font-size: 1.4rem;
+             font-weight: bold;
+             border-radius: 60px;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+             position: relative;
+             overflow: hidden;
+             text-transform: uppercase;
+             letter-spacing: 1px;
+         }
+
+                 .cta-button:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5);
+             background: linear-gradient(45deg, #66BB6A, #4CAF50);
+         }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+                 .scary-overlay {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: #000;
+             z-index: 1000;
+             opacity: 0;
+             pointer-events: none;
+             transition: opacity 0.5s ease;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+
+         .scary-image {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+             opacity: 0;
+             transform: scale(0.5);
+             transition: all 0.3s ease;
+         }
+
+        .scary-text {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff0000;
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px #ff0000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5);
+            }
+            to {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.8);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+         <div class="container">
+         <h1 class="title">Крутой сайт</h1>
+         <p class="subtitle">Нажми на кнопку, чтобы увидеть что-то интересное</p>
+         <button class="cta-button" onclick="triggerScare()">Нажми меня!</button>
+     </div>
+
+         <div class="scary-overlay" id="scaryOverlay">
+         <img src="maniac.jpg" alt="Scary" class="scary-image" id="scaryImage">
+     </div>
+     
+     <audio id="scaryAudio" preload="auto">
+         <source src="scrim.mp4" type="video/mp4">
+     </audio>
+
+    <script>
+        // Создаем частицы
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+                 
+
+                 // Инициализация
+         document.addEventListener('DOMContentLoaded', function() {
+             createParticles();
+             
+             // Добавляем случайные эффекты при наведении на кнопку
+             const button = document.querySelector('.cta-button');
+             let hoverCount = 0;
+             
+             button.addEventListener('mouseenter', function() {
+                 hoverCount++;
+                 if (hoverCount > 3) {
+                     button.style.background = 'linear-gradient(45deg, #ff0000, #8b0000)';
+                     button.textContent = 'НЕ НАЖИМАЙ!';
+                     button.style.boxShadow = '0 12px 35px rgba(255, 0, 0, 0.5)';
+                 }
+             });
+             
+             // Блокируем клавиши во время скримера
+             let isScaryMode = false;
+             
+             document.addEventListener('keydown', function(e) {
+                 if (isScaryMode) {
+                     // Блокируем F11, Escape, Alt+F4 и другие клавиши выхода
+                     if (e.key === 'F11' || e.key === 'Escape' || 
+                         (e.altKey && e.key === 'F4') || 
+                         (e.ctrlKey && e.key === 'w') ||
+                         (e.ctrlKey && e.key === 'W')) {
+                         e.preventDefault();
+                         e.stopPropagation();
+                         return false;
+                     }
+                 }
+             });
+             
+             // Обновляем функцию скримера
+             window.triggerScare = function() {
+                 isScaryMode = true;
+                 const overlay = document.getElementById('scaryOverlay');
+                 const scaryImage = document.getElementById('scaryImage');
+                 const scaryAudio = document.getElementById('scaryAudio');
+                 const body = document.body;
+                 const button = document.querySelector('.cta-button');
+
+                 // Отключаем кнопку
+                 button.disabled = true;
+                 button.style.opacity = '0.5';
+
+                 // Переходим в полноэкранный режим
+                 try {
+                     if (document.documentElement.requestFullscreen) {
+                         document.documentElement.requestFullscreen();
+                     } else if (document.documentElement.webkitRequestFullscreen) {
+                         document.documentElement.webkitRequestFullscreen();
+                     } else if (document.documentElement.msRequestFullscreen) {
+                         document.documentElement.msRequestFullscreen();
+                     }
+                 } catch (e) {
+                     console.log('Полноэкранный режим не поддерживается');
+                 }
+
+                 // Показываем оверлей
+                 overlay.style.pointerEvents = 'auto';
+                 overlay.style.opacity = '1';
+
+                 // Добавляем тряску
+                 body.classList.add('shake');
+
+                 // Показываем изображение
+                 setTimeout(() => {
+                     scaryImage.style.opacity = '1';
+                     scaryImage.style.transform = 'scale(1)';
+                 }, 300);
+
+                 // Воспроизводим звук (НА МАКСИМУМ!)
+                 try {
+                     scaryAudio.volume = 1.0; // МАКСИМАЛЬНАЯ ГРОМКОСТЬ!
+                     scaryAudio.currentTime = 0;
+                     scaryAudio.play();
+                 } catch (e) {
+                     console.log('Аудио не поддерживается');
+                 }
+
+                 // Скрываем через 5 секунд (больше времени на панику!)
+                 setTimeout(() => {
+                     isScaryMode = false;
+                     overlay.style.opacity = '0';
+                     overlay.style.pointerEvents = 'none';
+                     body.classList.remove('shake');
+                     scaryImage.style.opacity = '0';
+                     scaryImage.style.transform = 'scale(0.5)';
+                     
+                     // Останавливаем звук
+                     try {
+                         scaryAudio.pause();
+                         scaryAudio.currentTime = 0;
+                     } catch (e) {
+                         console.log('Аудио не поддерживается');
+                     }
+                     
+                     // Выходим из полноэкранного режима
+                     try {
+                         if (document.exitFullscreen) {
+                             document.exitFullscreen();
+                         } else if (document.webkitExitFullscreen) {
+                             document.webkitExitFullscreen();
+                         } else if (document.msExitFullscreen) {
+                             document.msExitFullscreen();
+                         }
+                     } catch (e) {
+                         console.log('Выход из полноэкранного режима не поддерживается');
+                     }
+                     
+                     // Восстанавливаем кнопку
+                     setTimeout(() => {
+                         button.disabled = false;
+                         button.style.opacity = '1';
+                     }, 500);
+                 }, 5000);
+             };
+         });
+    </script>
+</body>
+</html>
